@@ -14,8 +14,36 @@
       src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"
       defer
     ></script>
+<script type="module"
+        src="https://unpkg.com/@google/model-viewer@1.12.1/dist/model-viewer.min.js">
+</script>
 
     <style>
+
+      
+/* CSS mouse */
+
+    .pointer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 1; /* Always visible */
+      transform: translate(-50%, -50%) scale(1);
+      transition: transform 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+    }
+
+    .pointer.grow {
+      transform: translate(-50%, -50%) scale(2.5);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
       :root {
         --bg: #0e0e0e;
         --bg-light: #181818;
@@ -106,6 +134,16 @@
         text-align: center;
 
       }
+      model-viewer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0.3;
+}
+
 
       canvas#bgCanvas {
         position: absolute;
@@ -357,6 +395,7 @@
           align-items: center;
           gap: 2rem;
           transition: right 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+          z-index: 1050;
         }
 
         .nav.open {
@@ -365,9 +404,19 @@
 
         .burger {
           display: flex;
+          z-index: 1100;
         }
       }
 
+.burger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+.burger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
 
       /* Contact Form Improved Styles */
 .contact-form {
@@ -440,7 +489,9 @@
   <body>
     <!-- Header -->
     <header>
-      <a href="#" class="logo">Festus Live</a>
+      <a href="#" class="logo">
+    <img src="img/FLIVE  BG TM.png" alt="Festus Live Logo" style="height: 38px; vertical-align: middle;">
+  </a>
       <ul class="nav" id="navLinks">
         <li><a href="#services">Services</a></li>
         <li><a href="#highlights">Highlights</a></li>
@@ -453,20 +504,69 @@
     </header>
 
     <!-- Hero -->
-    <section class="hero">
-      <canvas id="bgCanvas"></canvas>
-      <div class="hero-overlay"></div>
-      <div class="hero-content" data-aos="fade-down" data-aos-duration="1200">
-        <h1>Crafting unforgettable experiences.</h1>
-        <div class="typed-wrap"><span id="typed"></span></div>
-        <a href="#contact" class="btn">Book Now</a>
-      </div>
-    </section>
+   <!-- ───── Hero : 3‑D Concert GLB + Typing effect ───────────── -->
+
+
+   <div class="hero" id="top">
+  <!-- <model-viewer
+  id="concert"
+  src="c1k.glb"
+  camera-controls
+  auto-rotate
+   auto-rotate-delay="0"  
+  disable-pan
+  field-of-view="360"
+  camera-orbit="0deg 75deg 4m" 
+  camera-target="0.5m 0.5m 1m"   
+  min-camera-orbit="auto 75deg 3m"
+  max-camera-orbit="auto 75deg 5m"
+  environment-image="neutral"
+  exposure="1.3"
+  shadow-intensity="5"
+  style="width:100%;height:100%;--poster-color:transparent">
+</model-viewer> -->
+
+<model-viewer
+  id="concert"
+  src="c1k.glb"
+
+  /* ─── CAMERA & CONTROLS ───────────────────── */
+  camera-controls           /* mouse orbit + pinch zoom */
+             /* but no side panning      */
+  camera-orbit="0deg 75deg 4m"
+  camera-target="0m 0.5m 0.7m"
+  min-camera-orbit="auto 75deg 3m"
+  max-camera-orbit="auto 75deg 6m"
+
+  /* ─── LIGHTING ─────────────────────────────── */
+  environment-image="neutral"
+  exposure="1.3"
+  shadow-intensity="1"
+
+  /* ─── AUTO‑ROTATE  ─────────────────────────── */
+  auto-rotate
+  auto-rotate-delay="0"     /* start immediately        */
+  rotation-per-second="45deg"
+    interaction-policy="allow-when-focused" /* clicks WON’T pause spin  */
+     /* clicks WON’T pause spin  */
+  interaction-prompt="none" 
+  style="width:100%;height:100%;--poster-color:transparent;">
+</model-viewer>
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content" data-aos="fade-down" data-aos-duration="1200">
+    <h1>Crafting unforgettable experiences.</h1>
+    <div class="typed-wrap"><span id="typed"></span></div>
+    <a href="#contact" class="btn">Book Now</a>
+  </div>
+</div>
+
 
     <!-- Moving ticker -->
     <div class="ticker" aria-hidden="true">
       <div class="ticker__inner">
-        • Concerts • Comedy Shows • Corporate Events • Custom Shows • Concerts • Comedy Shows • Corporate Events • Custom Shows •
+        • Concerts • Comedy Shows • Corporate Events • Custom Shows • Concerts • Comedy Shows • Corporate Events • Custom Shows •  Concerts • Comedy Shows • Corporate Events • Custom Shows • Concerts • Comedy Shows • Corporate Events • Custom Shows •
       </div>
     </div>
 
@@ -504,7 +604,7 @@
       <div class="highlight-grid">
         <div class="highlight-card" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?auto=format&fit=crop&w=900&q=80" alt="Concert"/><div class="highlight-caption">Gig Frenzy 2025 – Delhi</div></div>
         <div class="highlight-card" data-aos="fade-up" data-aos-delay="120"><img src="https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&w=900&q=80" alt="Comedy"/><div class="highlight-caption">Laugh Riot – Mumbai</div></div>
-        <div class="highlight-card" data-aos="fade-up" data-aos-delay="240"><img src="https://images.unsplash.com/photo-1543195935-ef50f4b73579?auto=format&fit=crop&w=900&q=80" alt="Corporate"/><div class="highlight-caption">Tech Summit 2025 – Bengaluru</div></div>
+        <div class="highlight-card" data-aos="fade-up" data-aos-delay="240"><img src="img/image.png" alt="Corporate"/><div class="highlight-caption">Tech Summit 2025 – Bengaluru</div></div>
       </div>
     </section>
 
@@ -561,6 +661,8 @@
       </nav>
       <p>© 2025 Festus Live. All rights reserved.</p>
     </footer>
+<!-- HTML -->
+ <div class="pointer" id="pointer"></div>
 
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
@@ -570,6 +672,15 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
 
     <script>
+      // JS mouse cursor
+
+const cursor = document.querySelector(".custom-cursor");
+
+document.addEventListener("mousemove", e => {
+  cursor.style.top = `${e.clientY}px`;
+  cursor.style.left = `${e.clientX}px`;
+});
+
       // Init AOS
       AOS.init({ once: false });
 
@@ -591,38 +702,38 @@
       });
 
       // ===== Three.js Background =====
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 4;
-      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("bgCanvas"), alpha: true, antialias: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      const geometry = new THREE.IcosahedronGeometry(1.6, 0);
-      const material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, opacity: 0.4, transparent: true });
-      const mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
+      // const scene = new THREE.Scene();
+      // const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      // camera.position.z = 4;
+      // const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("bgCanvas"), alpha: true, antialias: true });
+      // renderer.setSize(window.innerWidth, window.innerHeight);
+      // const geometry = new THREE.IcosahedronGeometry(1.6, 0);
+      // const material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, opacity: 0.4, transparent: true });
+      // const mesh = new THREE.Mesh(geometry, material);
+      // scene.add(mesh);
       // Stars
-      function addStar() {
-        const starGeo = new THREE.SphereGeometry(0.02, 12, 12);
-        const starMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const star = new THREE.Mesh(starGeo, starMat);
-        const [x, y, z] = Array(3).map(() => THREE.MathUtils.randFloatSpread(30));
-        star.position.set(x, y, z);
-        scene.add(star);
-      }
-      Array(250).fill().forEach(addStar);
+      // function addStar() {
+      //   const starGeo = new THREE.SphereGeometry(0.02, 12, 12);
+      //   const starMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      //   const star = new THREE.Mesh(starGeo, starMat);
+      //   const [x, y, z] = Array(3).map(() => THREE.MathUtils.randFloatSpread(30));
+      //   star.position.set(x, y, z);
+      //   scene.add(star);
+      // }
+      // Array(250).fill().forEach(addStar);
       // Animate
-      function animate() {
-        requestAnimationFrame(animate);
-        mesh.rotation.x += 0.002;
-        mesh.rotation.y += 0.003;
-        renderer.render(scene, camera);
-      }
-      animate();
-      window.addEventListener("resize", () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
+      // function animate() {
+      //   requestAnimationFrame(animate);
+      //   mesh.rotation.x += 0.002;
+      //   mesh.rotation.y += 0.003;
+      //   renderer.render(scene, camera);
+      // }
+      // animate();
+      // window.addEventListener("resize", () => {
+      //   camera.aspect = window.innerWidth / window.innerHeight;
+      //   camera.updateProjectionMatrix();
+      //   renderer.setSize(window.innerWidth, window.innerHeight);
+      // });
 
       // ===== GSAP ScrollTrigger Parallax =====
       gsap.registerPlugin(ScrollTrigger);
@@ -639,6 +750,59 @@
       document.addEventListener("DOMContentLoaded", () => {
   lucide.createIcons();
   // ...
+});
+
+// mouse cursor effect
+const pointer = document.getElementById("pointer");
+
+// Detect if the device supports a mouse pointer (not mobile)
+const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+if (supportsHover) {
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let pointerX = mouseX;
+  let pointerY = mouseY;
+
+  document.addEventListener("mousemove", e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animatePointer() {
+    // Lerp for smooth delay (0.15 = more delay, 1 = instant)
+    pointerX += (mouseX - pointerX) * 0.15;
+    pointerY += (mouseY - pointerY) * 0.15;
+    pointer.style.left = `${pointerX}px`;
+    pointer.style.top = `${pointerY}px`;
+    requestAnimationFrame(animatePointer);
+  }
+  animatePointer();
+
+  // Only scale on hover
+  const hoverTargets = document.querySelectorAll("a, button, [data-hover]");
+  hoverTargets.forEach(el => {
+    el.addEventListener("mouseenter", () => {
+      pointer.classList.add("grow");
+    });
+    el.addEventListener("mouseleave", () => {
+      pointer.classList.remove("grow");
+    });
+  });
+} else {
+  // Hide pointer on mobile or touch devices
+  pointer.style.display = "none";
+}
+
+
+
+
+// Close nav when a link is clicked (mobile)
+document.querySelectorAll('.nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    burgerBtn.classList.remove('open');
+  });
 });
     </script>
   </body>
