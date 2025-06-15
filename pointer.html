@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pointer Always Visible</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0d1117;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      font-family: sans-serif;
+    }
+
+    /* Clickable elements */
+    a, button, [data-hover] {
+      padding: 12px 24px;
+      background: #1f6feb;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .pointer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 1; /* Always visible */
+      transform: translate(-50%, -50%) scale(1);
+      transition: transform 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+    }
+
+    .pointer.grow {
+      transform: translate(-50%, -50%) scale(2.5);
+      background: rgba(255, 255, 255, 0.03);
+    }
+  </style>
+</head>
+<body>
+
+  <button>Click Me</button>
+  <a href="#">Visit Link</a>
+  <div data-hover>Custom Hover Area</div>
+
+  <div class="pointer" id="pointer"></div>
+
+  <script>
+  const pointer = document.getElementById("pointer");
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let pointerX = mouseX;
+  let pointerY = mouseY;
+
+  document.addEventListener("mousemove", e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animatePointer() {
+    // Lerp for smooth delay (0.15 = more delay, 1 = instant)
+    pointerX += (mouseX - pointerX) * 0.15;
+    pointerY += (mouseY - pointerY) * 0.15;
+    pointer.style.left = `${pointerX}px`;
+    pointer.style.top = `${pointerY}px`;
+    requestAnimationFrame(animatePointer);
+  }
+  animatePointer();
+
+  // Only scale on hover
+  const hoverTargets = document.querySelectorAll("a, button, [data-hover]");
+  hoverTargets.forEach(el => {
+    el.addEventListener("mouseenter", () => {
+      pointer.classList.add("grow");
+    });
+    el.addEventListener("mouseleave", () => {
+      pointer.classList.remove("grow");
+    });
+  });
+  </script>
+</body>
+</html>
