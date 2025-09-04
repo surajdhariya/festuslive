@@ -18,6 +18,8 @@
         src="https://unpkg.com/@google/model-viewer@1.12.1/dist/model-viewer.min.js">
 </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <style>
 
       
@@ -484,6 +486,95 @@
   color: #222;
   transform: translateY(-2px) scale(1.03);
 }
+
+
+
+
+
+.latest-show {
+  padding: 60px 20px;
+  background: transparent; /* ✅ no background */
+  color: #fff;
+}
+
+/* Wrapper (poster + booking) */
+.show-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* Poster Slider */
+.poster {
+  width: 100%;
+  max-width: 560px;
+}
+.poster img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+  transition: transform 0.4s ease;
+}
+.poster img:hover {
+  transform: scale(1.03);
+}
+
+/* Booking Side */
+.booking-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.book-btn {
+  background: #e50914;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 15px 30px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: 0.3s ease;
+  /* box-shadow: 0 0 15px rgba(229,9,20,0.6); */
+}
+.book-btn:hover {
+  background: #b00610;
+  transform: scale(1.05);
+}
+
+.or-text {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #333;
+}
+
+.qr-box img {
+  width: 250px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+  .show-wrapper {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .booking-side {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+  .qr-box img {
+    width: 100px;
+  }
+}
     </style>
   </head>
   <body>
@@ -569,6 +660,52 @@
         • Concerts • Comedy Shows • Corporate Events • Custom Shows • Concerts • Comedy Shows • Corporate Events • Custom Shows •  Concerts • Comedy Shows • Corporate Events • Custom Shows • Concerts • Comedy Shows • Corporate Events • Custom Shows •
       </div>
     </div>
+
+
+
+
+
+
+
+<section class="latest-show">
+  <div class="show-wrapper">
+    
+    <!-- Poster with slider -->
+    <div class="poster">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="img/1.1.png" alt="Show Poster 1"></div>
+          <div class="swiper-slide"><img src="img/FINAL.png" alt="Show Poster 2"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Booking Options -->
+    <div class="booking-side">
+    
+     
+      <div class="qr-box">
+        <img src="img/myqr.png" alt="Scan QR for Tickets">
+      </div>
+ <span class="or-text" style="color: white;">OR</span>
+        <a href="https://in.bookmyshow.com/events/festuslive-with-rajat-sood/ET00453359" 
+         target="_blank" class="book-btn">
+        Book Now
+      </a>
+    </div>
+    
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
 
     <!-- ===== Services ===== -->
      <!-- ===== What We Do ===== -->
@@ -808,6 +945,20 @@ document.querySelectorAll('.nav a').forEach(link => {
     burgerBtn.classList.remove('open');
   });
 });
+
+
+  var swiper = new Swiper('.swiper', {
+    loop: true,
+    autoplay: {
+      delay: 2500, // 2.5s auto slide
+      disableOnInteraction: false,
+    },
+    effect: 'slide'
+  });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+</script>
   </body>
 </html>
